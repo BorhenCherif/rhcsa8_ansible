@@ -1,0 +1,47 @@
+---
+- name: managing basic permissions
+  hosts: localhost
+  tasks:
+    - name: create directory
+      file:
+       path: /data/sales
+       state: directory
+       recurse: yes
+       owner: linda
+       group: sales
+       mode: '770'
+    - name: create directory
+      file:
+       path: /data/account
+       state: directory
+       recurse: yes
+       owner: linda
+       group: account
+       mode: '770'
+    - name: manage acl permission for /data/sales      
+      acl:
+        path: /data/sales
+        entity: account
+        etype: group
+        permissions: rx
+        state: present
+      register: result1
+    - name: show result1  
+      debug:
+        var: result1
+
+
+    - name: manage acl permission for /data/account
+      acl:
+         path: /data/account
+         entity: sales
+         etype: group
+         permissions: rx
+         state: present
+
+
+
+# Verify
+# ansible localhost -a 'getfacl /data/account'
+# ansible localhost -a 'getfacl /data/sales'
+

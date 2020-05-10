@@ -1,0 +1,27 @@
+---
+- name: create users and groups
+  hosts: localhost
+  tasks:
+   - name: create groups
+     group:
+       name: "{{ item }}"
+     with_items:
+         - wheel
+         - sales
+         - account
+   - name: create users
+     user:
+       name: "{{ item.name }}"
+       state: present
+       groups: "{{ item.groups }}"
+     loop:
+       - name: laura
+         groups: wheel
+       - name: lori
+         groups: users
+      
+  # Verify
+  # ansible localhost -a 'id laura'
+  # ansible localhost -m command -a 'cat /etc/passwd'
+
+        

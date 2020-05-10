@@ -1,0 +1,23 @@
+---
+- name: working with grep
+  hosts: localhost
+  tasks:
+    - name: grep in sshd
+      shell: grep '^#' /etc/sysconfig/sshd
+      register: result
+      ignore_errors: yes
+      check_mode: no
+      failed_when: "result.rc == 2"
+    - name: show result
+      debug:
+        var: result
+
+    - name: grep 2 in sshd
+      shell: grep -v '^#' /etc/sysconfig/sshd
+      register: result2
+      ignore_errors: yes
+      check_mode: no
+      failed_when: "result2.rc == 2"
+    - name: show result
+      debug:
+        var: result2    

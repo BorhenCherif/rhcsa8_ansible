@@ -1,0 +1,36 @@
+---
+- name: creating users accounts
+  hosts: localhost
+  tasks:
+   - name: verify create_home 
+     lineinfile:
+        path: /etc/login.defs
+        regexp: '^CREATE_HOME'
+        line: CREATE_HOME    yes
+
+   - name: make directory
+     file:
+       path: /etc/skel/Pictures/Documents
+       state: directory
+       recurse: yes
+
+   - name: modify bashrc
+     lineinfile:
+       path: /etc/skel/.bashrc
+       line: EDITOR=/usr/bin/vim
+       state: present
+   - name: create a group linda
+     group:
+       name: linda
+   - name: create user linda
+     user:
+       name: linda
+       state: present
+       password: password
+       groups: linda
+       expires: 90
+  # ansible localhost -a 'id lisa'     
+  #
+  
+     
+

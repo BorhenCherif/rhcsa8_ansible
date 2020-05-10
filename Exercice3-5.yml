@@ -1,0 +1,11 @@
+---
+- name: Using tar
+  hosts: localhost
+  tasks:
+    - name: compress file
+      archive:
+        path: /etc/hosts
+        dest: /etc/hosts.tar.gz
+
+ 
+

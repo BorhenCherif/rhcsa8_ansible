@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: BSD-3-Clause
+---
+- hosts: localhost
+  vars:
+    network_connections:
+
+      # Create one ethernet profile and activate it.
+      # The profile uses automatic IP addressing
+      # and is tied to the interface by MAC address.
+      - name: ens224
+        state: up
+        type: ethernet
+        autoconnect: yes
+        mac: 00:0c:29:a3:25:5f
+        mtu: 1450
+
+  roles:
+    - rhel-system-roles.network
+~
+
